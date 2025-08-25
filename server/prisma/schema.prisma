@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model User {
+  id       String  @id @default(cuid())
+  name     String @unique @db.VarChar(191)
+  password String
+  email    String?
+  image    String?
+
+  // relations
+  ownedGroups  chatgroup[]       @relation("GroupOwner")
+  memberships  ChatGroupMember[]
+}
+model chatgroup {
+  id         String   @id @default(cuid())
+  owner      User     @relation("GroupOwner", fields: [owner_id], references: [id], onDelete: Cascade)
+  owner_id   String
+  title      String   @db.VarChar(191)
+  created_at DateTime @default(now())
+  passcode   String 
+  members    ChatGroupMember[]
+  chats      chat[]
+}
+
+model ChatGroupMember {
+  id          String    @id @default(cuid())
+  user        User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id     String
+  chatgroup   chatgroup @relation(fields: [group_id], references: [id], onDelete: Cascade)
+  group_id    String
+  joinedAt    DateTime  @default(now())
+}
+model chat{
+  id String @id @default(cuid())
+  group chatgroup @relation(fields:[group_id],references:[id],onDelete:Cascade)
+  group_id String
+  message  String? 
+  name String
+  createdAt DateTime @default(now())
+  @@index([createdAt])
+  @@map("chats")
+}
