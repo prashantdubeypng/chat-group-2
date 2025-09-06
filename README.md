@@ -24,12 +24,12 @@ A robust full-stack chat application supporting real-time messaging, user authen
 ```mermaid
 flowchart TD
     A[User]
-    B[Frontend<br>(Next.js/React)]
-    C[Backend<br>(Express.js/TypeScript)]
-    D[WebSocket<br>(Socket.io)]
-    E[Database<br>(PostgreSQL/Prisma)]
-    F[Message Queue<br>(Kafka Broker)]
-    G[Docker<br>(PostgreSQL Container)]
+    B[Frontend (Next.js/React)]
+    C[Backend (Express.js/TypeScript)]
+    D[WebSocket (Socket.io)]
+    E[Database (PostgreSQL/Prisma)]
+    F[Message Queue (Kafka Broker)]
+    G[Docker (PostgreSQL Container)]
 
     A -- HTTP/WebSocket --> B
     B -- REST API --> C
