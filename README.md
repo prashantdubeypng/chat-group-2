@@ -21,7 +21,6 @@ A robust full-stack chat application supporting real-time messaging, user authen
 
 ### System Flow Diagram
 
-```mermaid
 flowchart TD
     A[User]
     B[Frontend (Next.js/React)]
@@ -40,7 +39,6 @@ flowchart TD
     C -- Kafka Producer/Consumer --> F
 
     E -- Dockerized --> G
-```
 
 **Flow Description**
 - Users interact via browser/mobile with the Next.js frontend.
