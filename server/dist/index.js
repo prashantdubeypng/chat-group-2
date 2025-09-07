@@ -8,7 +8,6 @@ import { setupSocket } from './socket.js';
 import { createAdapter } from "@socket.io/redis-streams-adapter";
 import redis from './config/redis.config.js';
 import { connectkafkaproducer } from './config/kafka.config.js';
-import { _consumer } from './helper.js';
 const app = express();
 app.use(cors({
     origin: '*',
@@ -28,10 +27,6 @@ export { io };
 connectkafkaproducer().catch((error) => {
     console.log("something went wrong");
     console.error(error);
-});
-_consumer(process.env.KAFKA_TOPIC).catch((err) => {
-    console.log('error');
-    console.error(err);
 });
 app.use('/api/chatroom/v1', router);
 server.listen(PORT, () => {

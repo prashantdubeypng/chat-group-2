@@ -17,7 +17,7 @@ export default function ProfileMenu({
   name,
 }: {
   image?: string;
-  name: string;
+  name?: string;
 }) {
   const [logoutOpen, setLogoutOpen] = useState(false);
   return (

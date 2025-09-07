@@ -7,7 +7,7 @@ export default function DashNav({
   name,
 }: {
   image?: string;
-  name: string;
+  name?: string;
 }) {
   return (
     <nav className="py-2 px-6 flex justify-between items-center bg-white shadow-sm">

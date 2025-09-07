@@ -44,7 +44,9 @@ export default function LoginPage() {
         // Store token in localStorage
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify({
-          name: formData.name,
+          name: data.user?.name || formData.name || "User",
+          id: data.user?.id,
+          email: data.user?.email,
           // Add other user properties as needed
         }));
         

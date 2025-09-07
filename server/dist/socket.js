@@ -17,23 +17,9 @@ export function setupSocket(io) {
         });
         socket.on("message", async (data) => {
             console.log("new message", data);
-            // Map frontend field names to Prisma model field names
-            const chatData = {
-                id: data.id,
-                message: data.message,
-                name: data.name,
-                group_id: data.group_id,
-                createdAt: new Date(data.created_at) // Convert created_at to createdAt
-            };
-            try {
-                await prisma.chat.create({
-                    data: chatData,
-                });
-                console.log("Message saved to database");
-            }
-            catch (error) {
-                console.error("Error saving message to database:", error);
-            }
+            await prisma.chat.create({
+                data: data,
+            });
             if (socket.room) {
                 socket.to(socket.room).emit("message", data);
             }

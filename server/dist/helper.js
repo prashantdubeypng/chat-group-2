@@ -1,24 +1,15 @@
-import { producer, consumer } from './config/kafka.config.js';
-import prisma from './config/db.config.js';
+import { producer } from './config/kafka.config.js';
 export const produceChatMessage = async (topic, message) => {
-    await producer.send({
-        topic,
-        messages: [{ value: JSON.stringify(message) }]
-    });
-};
-export const _consumer = async (topic) => {
-    await consumer.connect();
-    await consumer.subscribe({ topic: topic });
-    await consumer.run({
-        eachMessage: async ({ topic, partition, message }) => {
-            if (message.value == null) {
-                return;
-            }
-            const data = JSON.parse(message.value.toString());
-            await prisma.chat.create({
-                data: data
-            });
-        },
-    });
+    try {
+        await producer.send({
+            topic,
+            messages: [{ value: JSON.stringify(message) }]
+        });
+        console.log('Message sent to Kafka topic:', topic);
+    }
+    catch (error) {
+        console.warn('Failed to send message to Kafka, continuing without Kafka:', error.message);
+        // Continue without Kafka if it fails
+    }
 };
 //# sourceMappingURL=helper.js.map
